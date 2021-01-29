@@ -51,8 +51,6 @@ public class Saab95 extends Cars{
     @Override
     protected void incrementSpeed(double amount){
         setCurrentSpeed(getCurrentSpeed() + speedFactor() * amount);
-        // I Metoder ska man sätta metoden inom parents som ovan
-        //setCurrentSpeed = getCurrentSpeed() + speedFactor() * amount;
 
     }
 
