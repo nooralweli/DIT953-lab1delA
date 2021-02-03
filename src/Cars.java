@@ -31,6 +31,7 @@ public abstract class Cars implements Movable {
 
     /**
      * A method to set our engine power
+     *
      * @param enginePower our enginepower
      */
     public void setEnginePower(double enginePower) {
@@ -95,7 +96,7 @@ public abstract class Cars implements Movable {
      *
      * @param currentSpeed The current speed that will be set
      */
-    public void setCurrentSpeed(double currentSpeed) {
+    protected void setCurrentSpeed(double currentSpeed) {
         this.currentSpeed = currentSpeed;
     }
 
@@ -119,7 +120,8 @@ public abstract class Cars implements Movable {
 
     /**
      * A method to set the nr of doors we have on the car
-     * @param nrDoors  number of doors
+     *
+     * @param nrDoors number of doors
      */
     public void setNrDoors(int nrDoors) {
         this.nrDoors = nrDoors;
