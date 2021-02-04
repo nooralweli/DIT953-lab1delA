@@ -1,93 +1,97 @@
 import java.awt.*;
 
-//funktioner sänka och höja
-//increaseflatbedAngle = för att höja
-//decreaseflatBedAngle = för att sänka
-//[0,70] = 0<=flatbedAngle <= 70
-//i metoden increamentspeed =Flaket ska inte kunna höjas om lastbilen är i rörelse
-//i metoden decreamentspeed=Flaket ska inte kunna höjas om lastbilen är i rörelse
-//if (flatbedAngle == 0) bla bla
+import static java.lang.Math.abs;
 
 
 public class Scania extends Cars {
-    //flakets vinkel
-    private double flatBedAngle = 0;
-    private double speedFactor = 200;
+    /**
+     * A Variable for the angle of the flatbed
+     */
+    private int flatBedAngle;
 
+    /**
+     * A constructor to build Scania car
+     */
     public Scania() {
-        super(2, 200, Color.white, "Scania");
-        stopEngine();
+        super(2, 200, Color.black, "Scania");
+
     }
 
-    /*public void AdjustFlatBedAngle() {
-        if (flatBedAngle > 70) {
-            flatBedAngle = 70;
-        } else if (flatBedAngle < 0) {
+
+    /**
+     * Checks if the angle is between [0,70]
+     * otherwise the angle will be the newAngle
+     *
+     * @param newAngle the new angle for the flatbed
+     */
+    private void adjustBedAngle(int newAngle) {
+        if (newAngle < 0) {
             flatBedAngle = 0;
+        } else if (newAngle > 70) {
+            flatBedAngle = 70;
+        } else {
+            flatBedAngle = newAngle;
         }
     }
 
-    public void decreaseFlatBed(double angle) {
+
+    /**
+     * Inrease the flatbed
+     *
+     * @param angle the amount the flatbed will be increased with
+     */
+    public void increaseFlatBed(int angle) {
         if (getCurrentSpeed() == 0) {
-            double currentAngle = flatBedAngle;
-            flatBedAngle -= angle;
-            AdjustFlatBedAngle();
-            if (currentAngle < flatBedAngle) {
-                flatBedAngle = currentAngle;
+            int currentAngle = flatBedAngle;
+            int newAngle = currentAngle + abs(angle);
+            adjustBedAngle(newAngle);
 
-            }
         }
+
+
     }
-    public void increaseFlatBed ( double angle) {
+
+
+    /**
+     * decrease the flatbed
+     *
+     * @param angle the amount the flatbed will be decreased with
+     */
+    public void decreaseFlatBed(int angle) {
         if (getCurrentSpeed() == 0) {
-            double currentAngle = flatBedAngle;
-            flatBedAngle += angle;
-            AdjustFlatBedAngle();
-            if (currentAngle > flatBedAngle) {
-                flatBedAngle = currentAngle;
+            int currentAngle = flatBedAngle;
+            int newAngle = currentAngle - abs(angle);
+            adjustBedAngle(newAngle);
 
-            }
         }
+
+
     }
 
-
-
- public void manipulateAngle(double angle) {
-    if (getCurrentSpeed() == 0) {
-        if (flatBedAngle+angle <= 70 && flatBedAngle+angle>= 0) {
-            flatBedAngle += angle;
-        }
-
-        else{
-            AdjustFlatBedAngle();
-        }
-    }
- }
- */
-
-
-
+    /**
+     * increament the speed if flatBedAngle is 0
+     *
+     * @param amount we want to increase our speed with
+     */
     @Override
-    protected void incrementSpeed ( double amount){
+    protected void incrementSpeed(double amount) {
         if (flatBedAngle == 0) {
             setCurrentSpeed(getCurrentSpeed() + getEnginePower() * 0.01 * amount);
 
-            double newSpeed = getCurrentSpeed();
-            if (newSpeed > getEnginePower()) {
-                setCurrentSpeed(getEnginePower());
-            }
         }
+
     }
 
+    /**
+     * increament the speed if flatbedAngle is 0
+     *
+     * @param amount to decrease our speed with
+     */
     @Override
-    protected void decrementSpeed ( double amount){
-        setCurrentSpeed(getCurrentSpeed() - getEnginePower() * 0.01 * amount);
-
-        double newSpeed = getCurrentSpeed();
-        if (newSpeed < 0) {
-            setCurrentSpeed(0);
+    protected void decrementSpeed(double amount) {
+        if (flatBedAngle == 0) {
+            setCurrentSpeed(getCurrentSpeed() - getEnginePower() * 0.01 * amount);
         }
+
     }
-
-
 }
