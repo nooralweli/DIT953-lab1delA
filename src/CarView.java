@@ -25,12 +25,10 @@ public class CarView extends JFrame {
     JPanel controlPanel = new JPanel();
 
     JPanel gasPanel = new JPanel();
-    JPanel brakePanel = new JPanel();
     JSpinner gasSpinner = new JSpinner();
-    int brakeAmount= 0;
     int gasAmount = 0;
     JLabel gasLabel = new JLabel("Amount of gas");
-    //JLabel brakeLabel = new JLabel("Amount of brake");
+
 
     JButton gasButton = new JButton("Gas");
     JButton brakeButton = new JButton("Brake");
@@ -41,6 +39,12 @@ public class CarView extends JFrame {
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
+    /*Remove the car from the panel
+    *Add t
+     */
+    //JButton addCars = new JButton("Add Car");
+    //JButton removeCars = new JButton("remove Car");
+
 
     // Constructor
     public CarView(String framename, CarController cc) {
@@ -72,7 +76,7 @@ public class CarView extends JFrame {
         });
 
         gasPanel.setLayout(new BorderLayout());
-       //brakePanel.setLayout(new BorderLayout());
+        //brakePanel.setLayout(new BorderLayout());
         gasPanel.add(gasLabel, BorderLayout.PAGE_START);
         //brakePanel.add(brakeLabel, BorderLayout.PAGE_START);
         gasPanel.add(gasSpinner, BorderLayout.PAGE_END);
@@ -112,7 +116,7 @@ public class CarView extends JFrame {
             }
         });
 
-       brakeButton.addActionListener(new ActionListener() {
+        brakeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 carC.brake(gasAmount);
@@ -121,14 +125,38 @@ public class CarView extends JFrame {
         lowerBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.lowerBed(gasAmount);
+                carC.lowerBed();
             }
         });
 
         liftBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.liftBed(gasAmount);
+                carC.liftBed();
+            }
+        });
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.startAllCars();
+            }
+        });
+        stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.stopAllCars();
+            }
+        });
+        turboOnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.turboOn();
+            }
+        });
+        turboOffButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.turboOff();
             }
         });
         // Make the frame pack all it's components by respecting the sizes if possible.
