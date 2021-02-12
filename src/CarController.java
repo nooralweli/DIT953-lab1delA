@@ -44,6 +44,7 @@ public class CarController {
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             for (Cars car : cars) {
+                /*if (car.getPosX()<=800||car.getPosY()<=800&&car.getPosX()>=0 && car.getPosY()>=0) { */
                 car.move();
                 int x = (int) Math.round(car.getPosX());
                 int y = (int) Math.round(car.getPosY());
@@ -53,6 +54,14 @@ public class CarController {
             }
         }
     }
+    //}
+
+    /*void collisionCheck(Cars car){
+        boolean collidedX;
+        boolean collidedY;
+        if(car.getPosX() >= 800+(car.getCarSize()/2)) {
+        car.currentspeed + car.getposX() <=0 ||
+        }*/
 
     // Calls the gas method for each car once
     void gas(int amount) {
@@ -84,17 +93,17 @@ public class CarController {
         }
     }
 
-    void liftBed(int amount) {
+    void liftBed() {
         for (Cars truck : cars) {
             if (truck instanceof Scania)
-                ((Scania)truck).increaseFlatBed(amount);
+                ((Scania)truck).incrementFlatBed();
         }
     }
 
-    void lowerBed(int amount) {
+    void lowerBed() {
         for (Cars truck : cars) {
             if (truck instanceof Scania)
-                ((Scania)truck).decreaseFlatBed(amount);
+                ((Scania)truck).decrementFlatBed();
         }
     }
 
