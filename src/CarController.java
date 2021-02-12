@@ -45,6 +45,7 @@ public class CarController {
         public void actionPerformed(ActionEvent e) {
             for (Cars car : cars) {
                 /*if (car.getPosX()<=800||car.getPosY()<=800&&car.getPosX()>=0 && car.getPosY()>=0) { */
+                collisionCheck(car);
                 car.move();
                 int x = (int) Math.round(car.getPosX());
                 int y = (int) Math.round(car.getPosY());
@@ -56,12 +57,99 @@ public class CarController {
     }
     //}
 
-    /*void collisionCheck(Cars car){
-        boolean collidedX;
-        boolean collidedY;
-        if(car.getPosX() >= 800+(car.getCarSize()/2)) {
-        car.currentspeed + car.getposX() <=0 ||
-        }*/
+    /**boolean collisionCheck(Cars car) {
+        boolean xCollision = -car.getCurrentSpeed() + car.getPosX() <= 0 || car.getCurrentSpeed() + car.getPosX() >= frame.drawPanel.getWidth();
+        boolean yCollision = car.getCurrentSpeed() + car.getPosX() >= 0 || car.getCurrentSpeed() + car.getPosY() > 800;
+        return xCollision && yCollision;
+
+    }*/
+    boolean xCol(Cars car){
+        boolean xCollision = false;
+
+        if(car.getPosX() + car.getCurrentSpeed() > 800){
+            xCollision=true;
+            car.setPosX(800);
+        }
+        else if(car.getPosX() - car.getCurrentSpeed() < 0){
+            xCollision=true;
+            car.setPosX(0);
+        }
+        return xCollision;
+    }
+    boolean yCol(Cars car){
+        boolean yCollision = false;
+
+        if(car.getPosY() + car.getCurrentSpeed() > 800){
+            yCollision = true;
+            car.setPosY(800);
+        }
+        else if(car.getPosY() - car.getCurrentSpeed() < 0){
+            yCollision=true;
+            car.setPosY(0);
+        }
+        return yCollision;
+    }
+
+    void collisionCheck(Cars car) {
+
+
+        if (xCol(car)) {
+            double currentspeedx = car.getCurrentSpeed();
+            //car.stopEngine();
+            switch (car.dir) {
+                case NORTH:
+                    car.dir = Cars.Direction.SOUTH;
+                    car.setPosX(800);
+                case SOUTH:
+                    car.dir = Cars.Direction.NORTH;
+                    car.setPosX(0);
+            }
+            car.startEngine();
+            car.setCurrentSpeed(currentspeedx);
+
+            /*
+            if(car.getDir() == Cars.Direction.SOUTH ){
+                car.dir=Cars.Direction.NORTH;
+            }
+            else if(car.getDir() == Cars.Direction.NORTH ){
+                car.dir=Cars.Direction.SOUTH;
+            }
+            car.startEngine();
+            car.setCurrentSpeed(currentspeedx);
+            //stop enginee
+            //currentdir motsats
+            // start engine
+            //currentspeed = gamla currentspeed
+
+             */
+        }
+
+            if (yCol(car)) {
+                double currentspeedy = car.getCurrentSpeed();
+                car.stopEngine();
+            /*if(car.getDir() == Cars.Direction.SOUTH ){
+                car.dir=Cars.Direction.NORTH;
+            }
+            else if(car.getDir() == Cars.Direction.NORTH ){
+                car.dir=Cars.Direction.SOUTH;
+            }
+            car.startEngine();
+            car.setCurrentSpeed(currentspeedy);*/
+                switch (car.dir) {
+
+                    case EAST:
+                        car.dir = Cars.Direction.WEST;
+                    case WEST:
+                        car.dir = Cars.Direction.EAST;
+
+                }
+                car.startEngine();
+                car.setCurrentSpeed(currentspeedy);
+
+
+            }
+
+        }
 
     // Calls the gas method for each car once
     void gas(int amount) {
