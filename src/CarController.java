@@ -1,7 +1,9 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 /*
  * This class represents the Controller part in the MVC pattern.
@@ -23,6 +25,8 @@ public class CarController {
     // A list of cars, modify if needed
     ArrayList<Cars> cars = new ArrayList<>();
 
+
+
     //methods:
 
     public static void main(String[] args) {
@@ -38,6 +42,7 @@ public class CarController {
         cc.cars.get(1).setPosX(200);
         cc.cars.get(2).setPosX(400);
 
+
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
 
@@ -51,41 +56,40 @@ public class CarController {
      * view to update its images. Change this method to your needs.
      * */
     private class TimerListener implements ActionListener {
+
+
         public void actionPerformed(ActionEvent e) {
-            for (Cars car : cars) {
 
-                if(car instanceof Volvo240){ frame.drawPanel.CarImage.add("Volvo240");}
-                else if(car instanceof Saab95){frame.drawPanel.CarImage.add("Saab95");}
-                else if(car instanceof Scania){frame.drawPanel.CarImage.add("Scania");}
-               // frame.drawPanel.CarPoints.add(new Point(car.getPosX(),car.getPosY()));
-
-
-                /*if (car.getPosX()<=800||car.getPosY()<=800&&car.getPosX()>=0 && car.getPosY()>=0) { */
+            for (int i = 0; i < cars.size(); i++) {
+                if (cars.get(i) instanceof Volvo240) {
+                    frame.drawPanel.CarImage.add("Volvo240");
+                } else if (cars.get(i) instanceof  Saab95) {
+                    frame.drawPanel.CarImage.add("Saab95");
+                } else if (cars.get(i) instanceof Scania) {
+                    frame.drawPanel.CarImage.add("Scania");
+                }
+                collisionCheck(cars.get(i));
+                // frame.drawPanel.CarPoints.add(new Point(car.getPosX(),car.getPosY()));
                 /* frame.drawPanel.imageChooser(car); */
-                collisionCheck(car);
-                car.move();
-                int x = (int) Math.round(car.getPosX());
-                int y = (int) Math.round(car.getPosY());
-                frame.drawPanel.moveit(x, y);
+
+                cars.get(i).move();
+                int x = (int) Math.round(cars.get(i).getPosX());
+                int y = (int) Math.round(cars.get(i).getPosY());
+                frame.drawPanel.moveit(x,y,i);
+
+
+                //frame.drawPanel.moveit(x, y);
                 // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
-                /*System.out.println(cars.get(0).getCurrentSpeed());
-                System.out.println("X-Pos:" + cars.get(0).getPosX());
-                System.out.println("Y-Pos:" + cars.get(0).getPosY());
-                System.out.println(yCol(car));
-                System.out.println(car.dir.toString());*/
-
-                System.out.println(car.toString() + "Position: " +car.getPosY());
 
 
-
+                System.out.println(cars.toString() + " Position: " + cars.get(i).getPosY());
             }
+            frame.drawPanel.repaint();
         }
     }
 
-    void imageChooser(Cars car) {
 
-    }
+
     //}
     boolean xCol(Cars car) {
         boolean xCollision = false;
@@ -95,7 +99,7 @@ public class CarController {
         } else if (car.dir == Cars.Direction.EAST && car.getPosX() + car.getCurrentSpeed() > 800) {
             xCollision = true;
 
-        } else if (car.dir == Cars.Direction.EAST&& car.getPosX() - car.getCurrentSpeed() < 0) {
+        } else if (car.dir == Cars.Direction.EAST && car.getPosX() - car.getCurrentSpeed() < 0) {
 
         } else if (car.dir == Cars.Direction.WEST && car.getPosX() - car.getCurrentSpeed() < 0) {
             xCollision = true;
@@ -107,20 +111,19 @@ public class CarController {
     boolean yCol(Cars car) {
         boolean yCollision = false;
 
-        if (car.dir == Cars.Direction.NORTH && car.getPosY() + car.getCurrentSpeed() > 560-60) {
+        if (car.dir == Cars.Direction.NORTH && car.getPosY() + car.getCurrentSpeed() > 560 - 60) {
             yCollision = true;
 
-        } else if (car.dir == Cars.Direction.SOUTH && car.getPosY() + car.getCurrentSpeed() > 560-60) {
+        } else if (car.dir == Cars.Direction.SOUTH && car.getPosY() + car.getCurrentSpeed() > 560 - 60) {
 
         } else if (car.dir == Cars.Direction.SOUTH && car.getPosY() - car.getCurrentSpeed() < 0) {
             yCollision = true;
 
-        }else if (car.dir == Cars.Direction.NORTH && car.getPosY() - car.getCurrentSpeed() < 0) {
+        } else if (car.dir == Cars.Direction.NORTH && car.getPosY() - car.getCurrentSpeed() < 0) {
 
         }
         return yCollision;
     }
-
 
 
     void collisionCheck(Cars car) {
@@ -129,7 +132,7 @@ public class CarController {
             car.stopEngine();
             switch (car.dir) {
                 case NORTH:
-                    car.setPosY(560-60);
+                    car.setPosY(560 - 60);
                     car.dir = Cars.Direction.SOUTH;
                     break;
 
@@ -163,7 +166,7 @@ public class CarController {
             car.gas(0);
         }
     }
-    /**
+    /*
      * boolean collisionCheck(Cars car) {
      * boolean xCollision = -car.getCurrentSpeed() + car.getPosX() <= 0 || car.getCurrentSpeed() + car.getPosX() >= frame.drawPanel.getWidth();
      * boolean yCollision = car.getCurrentSpeed() + car.getPosX() >= 0 || car.getCurrentSpeed() + car.getPosY() > 800;
@@ -171,15 +174,16 @@ public class CarController {
      * }
      */
 
-         /*if(car.getDir() == Cars.Direction.SOUTH ){
+         /*
+         if(car.getDir() == Cars.Direction.SOUTH ){
                 car.dir=Cars.Direction.NORTH;
             }
             else if(car.getDir() == Cars.Direction.NORTH ){
                 car.dir=Cars.Direction.SOUTH;
             }
             car.startEngine();
-            car.setCurrentSpeed(currentspeedy);*/
-  /*
+            car.setCurrentSpeed(currentspeedy);
+
             if(car.getDir() == Cars.Direction.SOUTH ){
                 car.dir=Cars.Direction.NORTH;
             }
