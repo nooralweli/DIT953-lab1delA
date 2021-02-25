@@ -12,7 +12,10 @@ public abstract class Cars implements Movable {
     private String modelName; // The car model name
     private double posX;    //The position in x-axis
     private double posY;    //The position in y-axis
-    private Direction dir = Direction.NORTH; //The direction of the car,default NORTH
+    protected Direction dir = Direction.NORTH; //The direction of the car,default NORTH
+    protected int carSize;
+
+
 
     /**
      * A constructor to build the car
@@ -21,18 +24,21 @@ public abstract class Cars implements Movable {
      * @param enginePower Engine power of the car
      * @param color       Color of the car
      * @param modelName   The car model name
+     * @param carSize     The size of a car
      */
-    public Cars(int nrDoors, double enginePower, Color color, String modelName) {
+    public Cars(int nrDoors, double enginePower, Color color, String modelName, int carSize) {
         this.nrDoors = nrDoors;
         this.enginePower = enginePower;
         this.color = color;
         this.modelName = modelName;
+        this.carSize = carSize;
+
     }
 
     /**
      * A method to set our engine power
      *
-     * @param enginePower our enginepower
+     * @param enginePower our engine power
      */
     public void setEnginePower(double enginePower) {
         this.enginePower = enginePower;
@@ -160,6 +166,7 @@ public abstract class Cars implements Movable {
     public void startEngine() {
         currentSpeed = 0.1;
     }
+
 
     /**
      * Stops the Engine, sets speed to 0
