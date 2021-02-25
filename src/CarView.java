@@ -20,6 +20,7 @@ public class CarView extends JFrame {
     // The controller member
     CarController carC;
 
+
     DrawPanel drawPanel = new DrawPanel(X, Y - 240);
 
     JPanel controlPanel = new JPanel();
@@ -40,10 +41,9 @@ public class CarView extends JFrame {
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
     /*Remove the car from the panel
-    *Add t
-     */
-    //JButton addCars = new JButton("Add Car");
-    //JButton removeCars = new JButton("remove Car");
+    Add t
+    JButton addCars = new JButton("Add Car");
+    JButton removeCars = new JButton("remove Car");*/
 
 
     // Constructor
@@ -51,6 +51,7 @@ public class CarView extends JFrame {
         this.carC = cc;
         initComponents(framename);
     }
+
 
     // Sets everything in place and fits everything
     // TODO: Take a good look and make sure you understand how these methods and components work
@@ -170,5 +171,11 @@ public class CarView extends JFrame {
         this.setVisible(true);
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    void moveit(int  x, int y, int i) {
+
+        drawPanel.CarPoint.get(i).x=x;
+        drawPanel.CarPoint.get(i).y=y;
     }
 }
