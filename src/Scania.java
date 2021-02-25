@@ -3,17 +3,17 @@ import java.awt.*;
 import static java.lang.Math.abs;
 
 
-public class Scania extends Cars {
+public class Scania extends Trucks{
     /**
      * A Variable for the angle of the flatbed
      */
-    private int flatBedAngle;
+    public int flatBedAngle;
 
     /**
      * A constructor to build Scania car
      */
     public Scania() {
-        super(2, 200, Color.black, "Scania");
+        super(2, 200, Color.black, "Scania",5);
 
     }
 
@@ -37,11 +37,10 @@ public class Scania extends Cars {
 
     /**
      * Inrease the flatbed
-     *
      * @param angle the amount the flatbed will be increased with
      */
     public void increaseFlatBed(int angle) {
-        if (getCurrentSpeed() == 0) {
+        if (getCurrentSpeed() <= 0.0001) {
             int currentAngle = flatBedAngle;
             int newAngle = currentAngle + abs(angle);
             adjustBedAngle(newAngle);
@@ -58,7 +57,7 @@ public class Scania extends Cars {
      * @param angle the amount the flatbed will be decreased with
      */
     public void decreaseFlatBed(int angle) {
-        if (getCurrentSpeed() == 0) {
+        if (getCurrentSpeed() <= 0.0001) {
             int currentAngle = flatBedAngle;
             int newAngle = currentAngle - abs(angle);
             adjustBedAngle(newAngle);
@@ -95,3 +94,4 @@ public class Scania extends Cars {
 
     }
 }
+
