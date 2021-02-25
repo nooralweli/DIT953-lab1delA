@@ -6,9 +6,9 @@ Detta sker genom att tillägga Abstract framför class i:
             "public class PersonalCars extends Cars {".
 
 2. Modellen måste kopplas till Carview eftersom Carview måste få till sig datan från Cars på listan av bilarna.
-Detta kan ske via att skapa ett nytt interface. Det nya interfacet ska använda sig av
+Detta kan ske via att skapa en klass. Det nya klassen ska använda sig av
 update för att den ska bero på vilken bil den vill rita.
-                Exempelvis att interfacet ska se ut såhär:
+                Exempelvis att klassen ska se ut såhär:
                     <T> void update (T list)
 
     Drawpanel måste också få uppdateringsmetoden för att kunna simulera bilarna.
