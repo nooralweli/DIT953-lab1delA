@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Saab95 extends Cars{
+public class Saab95 extends PersonalCars {
 
     private boolean turboOn; // var to enable or disable turbo
 
@@ -8,7 +8,7 @@ public class Saab95 extends Cars{
      * A Constructor to build a Saab95 car
      */
     public Saab95(){
-        super(2,125,Color.red,"Saab95");
+        super(2,125,Color.red,"Saab95",4);
         stopEngine();
     }
 
@@ -60,7 +60,7 @@ public class Saab95 extends Cars{
      * @param amount to decrease our speed with
      */
 
-    protected void decrementSpeed(double amount) {
+    public void decrementSpeed(double amount) {
         setCurrentSpeed(getCurrentSpeed() - speedFactor() * amount);
     }
 
