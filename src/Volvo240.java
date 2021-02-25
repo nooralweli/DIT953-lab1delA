@@ -3,7 +3,7 @@ import java.awt.*;
 /**
  * A subclass,represent Volvo240
  */
-public class Volvo240 extends Cars{
+public class Volvo240 extends PersonalCars {
 
     private final static double trimFactor = 1.25;
 
@@ -11,7 +11,7 @@ public class Volvo240 extends Cars{
      * A Constructor to build a VOLVO240 car
      */
     public Volvo240() {
-        super(4, 100, Color.black, "Volvo240");
+        super(4, 100, Color.black, "Volvo240",5);
         stopEngine();
 
     }
@@ -22,7 +22,7 @@ public class Volvo240 extends Cars{
      *
      * @return speed factor
      */
-    public double speedFactor() {
+    private double speedFactor() {
         return getEnginePower() * 0.01 * trimFactor;
     }
 
@@ -41,7 +41,7 @@ public class Volvo240 extends Cars{
      *
      * @param amount to decrease our speed with
      */
-    protected void decrementSpeed(double amount) {
+    public void decrementSpeed(double amount) {
         setCurrentSpeed(Math.max(getCurrentSpeed() - speedFactor() * amount, 0));
 
     }
