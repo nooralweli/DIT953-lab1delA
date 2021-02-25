@@ -1,63 +1,134 @@
 import java.awt.*;
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.Stack;
 
-public class CarTransport extends Cars {
+import static java.lang.Math.abs;
 
-    private boolean ramp;
+/**
+ * Presents a Cartransport car
+ */
+public class CarTransport extends Trucks {
+
+
+    /**
+     * For two ways to positions, up and down
+     */
+    protected enum Ramp {
+        UP, DOWN
+    }
+
+
+    protected Ramp ramp = Ramp.UP; // default is up
+    private final int MAX_LOAD = 3;
+    private final int MAX_DISTANCE = 10;
+    private final int MAX_SIZE = 20;
+    private final Stack<Cars> load = new Stack<>();
+    //private String[] allowedCars;
+
 
     /**
      * A constructor to build the car
      *
-     * @param nrDoors     Number of doors on the car
      * @param enginePower Engine power of the car
      * @param color       Color of the car
-     * @param modelName   The car model name
+     * @param modelName   The car modelName
+     * @param carSize     The size of the car
+     * @param nDoors      The number of doors
      */
-    public CarTransport(int nrDoors, double enginePower, Color color, String modelName, int x, int y) {
-        super(2 , 400,Color.WHITE, "CarTransport");
-
-
-    }
-
-
-    public void lowerRamp(){
-        if(getCurrentSpeed()==0){
-            ramp = true;
-        }
+    public CarTransport(int nDoors,double enginePower, Color color, String modelName, int carSize) {
+        super(2, 400, Color.WHITE, "CarTransport", 25);
 
     }
 
-    public void raiseRamp(){
-            ramp = false;
-        }
 
 
-    public void loadTransport(Cars car){
-        if(ramp && load.size()<3){
-            load.push(car);
-
-        }
-    }
-
-    public void offLoadTransport(){
-        if(ramp){
-            load.pop();
+    /**
+     * A method to decrease the ramp down
+     */
+    public void lowerRamp() {
+        if (getCurrentSpeed() == 0) {
+            ramp = Ramp.DOWN;
         }
 
 
     }
 
-    Deque<Cars> load = new ArrayDeque<>();
+    /**
+     * A method to raise the ramp up
+     */
+    public void raiseRamp() {
+        ramp = Ramp.UP;
+    }
 
+
+    /**
+     * A Method to Load the cars in a the carTransport
+     *
+     * @param car The car that will be loaded in the carTransport
+     */
+    protected void loadTransport(PersonalCars car) {
+
+        if (ramp == Ramp.DOWN && load.size() < MAX_LOAD && car.carSize <= MAX_SIZE) {
+            double transportPosX = getPosX();
+            double transportPosY = getPosY();
+            double carPosX = car.getPosX();
+            double carPosY = car.getPosY();
+
+            if (abs(transportPosX - carPosX) < MAX_DISTANCE && abs(transportPosY - carPosY) < MAX_DISTANCE) {
+                car.setPosX(transportPosX);
+                car.setPosY(transportPosY);
+                load.push(car);
+
+            }
+        }
+    }
+
+
+    /**
+     * A method to offLoad the cars from the carTransport
+     */
+    protected void offLoadTransport() {
+        if (ramp == Ramp.DOWN && load.size() > 0) {
+            double transportPosX = this.getPosX();
+            double transportPosY = this.getPosY();
+            Cars car = load.pop();
+            car.setPosX(transportPosX + load.size() + 1);
+            car.setPosY(transportPosY + load.size() + 1);
+
+        }
+    }
+
+
+    /**
+     * A method to increase the speed of the car
+     *
+     * @param amount we want to increase our speed with
+     */
     @Override
     protected void incrementSpeed(double amount) {
+        if (ramp == Ramp.UP) {
+            setCurrentSpeed(getCurrentSpeed() + getEnginePower() * 0.01 * amount);
+        }
 
     }
 
+    /**
+     * A method to decrease the speed of the car
+     *
+     * @param amount to decrease our speed with
+     */
     @Override
     protected void decrementSpeed(double amount) {
+        // är kravet att biltransporten ska inte kunna bromsa medans rampen är nere?
+        setCurrentSpeed(getCurrentSpeed() - getEnginePower() * 0.01 * amount);
+    }
 
+    @Override
+    public void move() {
+        super.move();
+        for (Cars cars : load) {
+            cars.setPosX(this.getPosX());
+            cars.setPosY(this.getPosY());
+        }
     }
 }
 
@@ -65,38 +136,3 @@ public class CarTransport extends Cars {
 
 
 
-
-
-
-
-
-
-
-
-/*
-
-modellnamn filnamn
-
-en ramp med två lägen///////////
-kan endast vara nere om bilen står stilla,//////////
-bilar kan endast lastas på om rampen är nere//////////
-och de ska befinna sig nära bil transporten,
-bilar kan endast lossas om rampen är nere,///////////
-
-de ska hamna nära biltransporten,
-kan endast lossas i first in last out,///////////
-biltransporten ska inte kunna lasta på sig själv,
-om en bil är lastad på transporten måste den alltid ha samma position som bilen
-
-
-
-bilar ska kunna lastas av o på, max antal bilar, ////////////
-dom får inte vara för stora.
-
-
-
-
-
-
-
- */
