@@ -1,10 +1,7 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
-
 /*
  * This class represents the Controller part in the MVC pattern.
  * It's responsibilities is to listen to the View and responds in a appropriate manner by
@@ -18,13 +15,14 @@ public class CarController {
     private final int delay = 50;
     // The timer is started with an listener (see below) that executes the statements
     // each step between delays.
-    private Timer timer = new Timer(delay, new TimerListener());
+    private final Timer timer = new Timer(delay, new TimerListener());
 
     // The frame that represents this instance View of the MVC pattern
+    // private
     CarView frame;
+
     // A list of cars, modify if needed
     ArrayList<Cars> cars = new ArrayList<>();
-
 
 
     //methods:
@@ -45,7 +43,12 @@ public class CarController {
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
+        cc.frame.brakeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+            }
+        });
         // Start the timer
         cc.timer.start();
 
@@ -61,21 +64,11 @@ public class CarController {
         public void actionPerformed(ActionEvent e) {
 
             for (int i = 0; i < cars.size(); i++) {
-                if (cars.get(i) instanceof Volvo240) {
-                    frame.drawPanel.CarImage.add("Volvo240");
-                } else if (cars.get(i) instanceof  Saab95) {
-                    frame.drawPanel.CarImage.add("Saab95");
-                } else if (cars.get(i) instanceof Scania) {
-                    frame.drawPanel.CarImage.add("Scania");
-                }
                 collisionCheck(cars.get(i));
-                // frame.drawPanel.CarPoints.add(new Point(car.getPosX(),car.getPosY()));
-                /* frame.drawPanel.imageChooser(car); */
-
                 cars.get(i).move();
                 int x = (int) Math.round(cars.get(i).getPosX());
                 int y = (int) Math.round(cars.get(i).getPosY());
-                frame.drawPanel.moveit(x,y,i);
+                frame.moveit(x, y, i);
 
 
                 //frame.drawPanel.moveit(x, y);
@@ -83,11 +76,12 @@ public class CarController {
 
 
                 System.out.println(cars.toString() + " Position: " + cars.get(i).getPosY());
+
             }
-            frame.drawPanel.repaint();
+            frame.repaint();
+
         }
     }
-
 
 
     //}
@@ -147,7 +141,6 @@ public class CarController {
 
 
         } else if (xCol(car)) {
-            double currentSpeedX = car.getCurrentSpeed();
             car.stopEngine();
 
             switch (car.dir) {
@@ -166,38 +159,6 @@ public class CarController {
             car.gas(0);
         }
     }
-    /*
-     * boolean collisionCheck(Cars car) {
-     * boolean xCollision = -car.getCurrentSpeed() + car.getPosX() <= 0 || car.getCurrentSpeed() + car.getPosX() >= frame.drawPanel.getWidth();
-     * boolean yCollision = car.getCurrentSpeed() + car.getPosX() >= 0 || car.getCurrentSpeed() + car.getPosY() > 800;
-     * return xCollision && yCollision;
-     * }
-     */
-
-         /*
-         if(car.getDir() == Cars.Direction.SOUTH ){
-                car.dir=Cars.Direction.NORTH;
-            }
-            else if(car.getDir() == Cars.Direction.NORTH ){
-                car.dir=Cars.Direction.SOUTH;
-            }
-            car.startEngine();
-            car.setCurrentSpeed(currentspeedy);
-
-            if(car.getDir() == Cars.Direction.SOUTH ){
-                car.dir=Cars.Direction.NORTH;
-            }
-            else if(car.getDir() == Cars.Direction.NORTH ){
-                car.dir=Cars.Direction.SOUTH;
-            }
-            car.startEngine();
-            car.setCurrentSpeed(currentspeedx);
-            //stop enginee
-            //currentdir motsats
-            // start engine
-            //currentspeed = gamla currentspeed
-             */
-
 
     // Calls the gas method for each car once
     void gas(int amount) {
