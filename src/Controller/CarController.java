@@ -13,13 +13,7 @@ import java.awt.event.ActionListener;
  */
 
 public class CarController {
-    // member fields:
-    //protected Cars.Direction dir = Cars.Direction.NORTH;
-    // The delay (ms) corresponds to 20 updates a sec (hz)
-
-
-    // The frame that represents this instance View of the MVC pattern
-
+  
     private CarList model;
     private final CarView frame;
 
@@ -31,7 +25,7 @@ public class CarController {
 
 
 
-    // A list of cars, modify if needed
+ 
 
 
     //methods:
@@ -49,34 +43,7 @@ public class CarController {
         frame.removeButton.addActionListener(e -> removeCar());
     }
 
-    /* Each step the TimerListener moves all the cars in the list and tells the
-     * view to update its images. Change this method to your needs.
-     * */
-    /*private class TimerListener implements ActionListener {
-
-
-        public void actionPerformed(ActionEvent e) {
-
-            for (Cars car : model.getCars()) {
-                collisionCheck(car);
-                //car.move();
-                model.move();
-                //System.out.println(car.toString() + " Position: " + car.getPosY());
-            }
-            for (ITurbo2 turboCars : model.getTurboCars()) {
-                Cars c = (Cars) turboCars;
-                collisionCheck(c);
-                model.move();
-                //System.out.println(turboCars.toString() + " Position: " + c.getPosY());
-            }
-            for (ITrucks trucks : model.getTruckCars()) {
-                Cars c = (Cars) trucks;
-                collisionCheck(c);
-                model.move();
-            }
-           model.notifyObserver();
-        }
-    }*/
+ 
 
     boolean xCol(Cars car) {
         boolean xCollision = false;
