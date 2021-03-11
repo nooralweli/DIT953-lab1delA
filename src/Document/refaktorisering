@@ -1,0 +1,61 @@
+       Refaktoriseringsplan
+
+
+1. //Göra så att Subklassen PersonalCars också blir abstrakt eftersom vi undviker kodduplicering
+Detta sker genom att tillägga Abstract framför class i:
+            "public class PersonalCars extends Cars {".
+
+2. Modellen måste kopplas till Carview eftersom Carview måste få till sig datan från Cars på listan av bilarna.
+   Detta kan ske via att skapa en klass. Det nya klassen ska använda sig av
+   update för att den ska bero på vilken bil den vill rita.
+                   Exempelvis att klassen ska se ut såhär:
+                       <T> void update (T list)
+
+       Drawpanel måste också få uppdateringsmetoden för att kunna simulera bilarna.
+       Vi overridar metoden i painCompenent eftesom det är den metoden som updaterar sig själv.
+       Det får se ut såhär exempelvis...
+                           @override
+                           public <T> void update (T list){
+                           Cars car = (Cars) list;
+                           }
+
+       Vi måste även generalisera paintCompenent för att den ska uppdatera vid varje bil via :
+                 for (int i =0; i < car.size(); i++){
+                                     g.drawImage(carImage.get(i), carPoint[i].x, carPoint[i].y,null);
+
+
+
+3. Timelistener i carcontroller måste ha en generaliserad implementation för att kunna flytta bilarna med hänsyn till
+open-closed-principle eftersom vi bör sträva efter att skriva kod som inte behöver ändras varje gång kraven ändras och det ger mer
+flexibel kod då man inte behöver lägga in en if statement varje gång man ska lägga till en ny Cars typ.
+Timelistener ska inte matcha bilderna med bilarna utan det är i paintcomponent som ska matcha bilarna med sina bilder.
+
+genom att göra en generaliserad for loop och skriva om if else koden till istället :
+                              Cars car = cars.get(i);
+                              car.move();
+
+4. //Enum på direction ska bli till en egen fil då den bör följa OCP principen men låst för modifikation genom
+att skapa ny fel som går att extenda i Carsklassen som är modellen och därmed får även carcontroller direction
+ via en indirekt förbindelse. Det blir en assocation relation från Cars till Direction.
+                Skapar filen enum genom att skriva :
+                            public enum Direction {
+                                EAST, WEST, NORTH, SOUTH
+                            }
+
+
+
+5. Generealisera actionlistener och använda den i car-Controller istället för CarView eftersom
+vyn kan inte vara beroende av controllen, utan motsatsen enligt mvc pattern. Vi måste alltså skapa knappen
+i CarView men registrera knapptryck och metod som ska köras i Carcontroller genom exempelvis:
+            cc.frame.brakeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              cc.brake(cc.frame.gasAmount);
+
+            }
+
+
+
+6. Måste sätta alla instansvariabler till private om inte annat bedöms vara bättre. (defence.. princip)
+
+alla punkter går att implementera parallelt.
