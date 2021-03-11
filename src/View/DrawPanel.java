@@ -47,11 +47,7 @@ public class DrawPanel extends JPanel {
         this.setBackground(Color.green);
         // Print an error message in case file is not found with a try/catch block
         try {
-            // You can remove the "View.pics" part if running outside of IntelliJ and
-            // everything is in the same main folder.
-            // volvoImage = ImageIO.read(new File("Volvo240.jpg"));
-
-            // Rememember to rightclick src New -> Package -> name: View.pics -> MOVE *.jpg to View.pics.
+          
             // if you are starting in IntelliJ.
             volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
             saabImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg"));
