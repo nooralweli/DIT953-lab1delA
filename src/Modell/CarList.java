@@ -177,14 +177,12 @@ public class CarList extends ArrayList<Cars>{
 
             for (Cars car : cars) {
                 collisionCheck(car);
-                //car.move();
                 car.move();
-                //System.out.println(car.toString() + " Position: " + car.getPosY());
+              
             }
             for (ITurbo2 turboCar : turboCars) {
                 collisionCheck(turboCar);
                 turboCar.move();
-                //System.out.println(turboCars.toString() + " Position: " + c.getPosY());
             }
             for (ITrucks trucks : truckCars) {
                 collisionCheck((Cars)trucks);
